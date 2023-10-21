@@ -141,7 +141,7 @@ def readFileKNN(filename):
                 data[data==" " + word] = str(i)
 
         data = np.char.strip(data) 
-    elif filename == "data/Short_agaricus-lepiota.data" or filename == "data/Short_agaricus-lepiota.data":
+    elif filename == "data/agaricus-lepiota.data" or filename == "data/Short_agaricus-lepiota.data":
         def char_to_alphabet_index(char):
             if 'a' <= char <= 'z':
                 return ord(char) - ord('a') + 1
