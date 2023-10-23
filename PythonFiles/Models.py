@@ -16,6 +16,10 @@ class LogisticRegression:
         self.num_iterations = 1000
         self.weights = None
         self.bias = None
+        self.iter = 0
+
+    def set_learning_rate(self, val):
+        self.learning_rate = val
 
     def sigmoid(self, z):
         # Sigmoid function to convert values to probabilities between 0 and 1
@@ -29,6 +33,8 @@ class LogisticRegression:
         converged = False
         cost1 = 1
         count = 0
+        self.iter = 0
+        
         while not converged and count<self.num_iterations:
         # Gradient descent
         #for i in range(self.num_iterations):
@@ -47,16 +53,48 @@ class LogisticRegression:
             self.weights -= self.learning_rate * dw
             self.bias -= self.learning_rate * db
             cost = 0   
-    
+            self.iter += 1
             probabilities = self.sigmoid(linear_model)
             cost = -1/num_samples * (np.dot(1 - labels, np.log(1 - probabilities + converge)) + np.dot(labels, np.log(probabilities + converge)))
+            
             if abs(cost1-cost)<=converge:
                 converged = True
             cost1=cost
             count+=1
-        return
+            
+        return 
         
+    def k_fold (self, data, labels, k):
+        accuracies = []
+        iterations = []
+        index_length = len(data)//k
+        counter = 0
         
+        for i in range(k):
+            if i == k-1:
+                data_testing_set = data[counter:]
+                data_training_set = data[:counter]
+                label_testing_set = labels[counter:]
+                label_training_set = labels[:counter]
+                
+            else:
+                data_testing_set = data[counter:index_length+counter]
+                label_testing_set = labels[counter:index_length+counter]
+                if counter == 0:
+                    data_training_set = data[index_length+1:]
+                    label_training_set = labels[index_length+1:]
+                else:
+                    data_training_set = np.concatenate((data[0:counter] , data[index_length+counter+1:]))
+                    label_training_set = np.concatenate((labels[0:counter] , labels[index_length+counter+1:]))
+                    
+            counter+=index_length
+            self.fit(np.array(data_training_set),np.array(label_training_set))
+            labels_pred = self.predict(np.array(data_testing_set))
+            accuracy = self.evaluate_acc(np.array(label_testing_set),np.array(labels_pred))
+            accuracies.append(accuracy)
+            iterations.append(self.iter)
+        
+        return accuracies, iterations
             
     def predict(self, data):
         #Hypothesis Function
