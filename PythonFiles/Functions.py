@@ -9,6 +9,96 @@ import statistics
 
 
 # In[2]:
+def readFile(filename):
+    data = []
+    labels = []
+    with open(filename, "r") as file:
+        for line in file:
+            line = line.strip()
+            if line:  # Skip empty lines
+                row = line.split(",")
+                if filename == "adult.data":
+                    # Convert non-numerical features to float
+                    age = float(row[0])
+                    fnlwgt = float(row[2])
+                    education_num = float(row[4])
+                    capital_gain = float(row[10])
+                    capital_loss = float(row[11])
+                    hours_per_week = float(row[12])
+                    # Combine the numerical features
+                    numerical_features = [age, fnlwgt, education_num, capital_gain, capital_loss, hours_per_week]
+                    # Append the numerical features
+                    data.append(numerical_features)
+                    label = row[-1]
+                    # Map the labels to binary values, e.g., '<=50K' to 0 and '>50K' to 1
+                    labels.append(0 if label == ' <=50K' else 1)
+                elif filename == "Rice_Cammeo_Osmancik.arff.txt":
+                    data.append([float(val) for val in row[:-1]])
+                    label = row[-1]
+                    labels.append(0 if label == 'Cammeo' else 1)
+                elif filename == "agaricus-lepiota.data":
+                    label = 0 if row[0] == 'e' else 1
+                    labels.append(label)
+
+                    # Define mappings for categorical values
+                    cap_shape_mapping = {'b': 0, 'c': 1, 'x': 2, 'f': 3, 'k': 4, 's': 5}
+                    cap_surface_mapping = {'f': 0, 'g': 1, 'y': 2, 's': 3}
+                    cap_color_mapping = {'n': 0, 'b': 1, 'c': 2, 'g': 3, 'r': 4, 'p': 5, 'u': 6, 'e': 7, 'w': 8, 'y': 9}
+                    bruises_mapping = {'t': 0, 'f': 1}
+                    odor_mapping = {'a': 0, 'l': 1, 'c': 2, 'y': 3, 'f': 4, 'm': 5, 'n': 6, 'p': 7, 's': 8}
+                    gill_attachment_mapping = {'a': 0, 'd': 1, 'f': 2, 'n': 3}
+                    gill_spacing_mapping = {'c': 0, 'w': 1, 'd': 2}
+                    gill_size_mapping = {'b': 0, 'n': 1}
+                    gill_color_mapping = {'k': 0, 'n': 1, 'b': 2, 'h': 3, 'g': 4, 'r': 5, 'o': 6, 'p': 7, 'u': 8, 'e': 9, 'w': 10, 'y': 11}
+                    stalk_shape_mapping = {'e': 0, 't': 1}
+                    stalk_root_mapping = {'b': 0, 'c': 1, 'u': 2, 'e': 3, 'z': 4, 'r': 5, '?': 6}
+                    stalk_surface_above_ring_mapping = {'f': 0, 'y': 1, 'k': 2, 's': 3}
+                    stalk_surface_below_ring_mapping = {'f': 0, 'y': 1, 'k': 2, 's': 3}
+                    stalk_color_above_ring_mapping = {'n': 0, 'b': 1, 'c': 2, 'g': 3, 'o': 4, 'p': 5, 'e': 6, 'w': 7, 'y': 8}
+                    stalk_color_below_ring_mapping = {'n': 0, 'b': 1, 'c': 2, 'g': 3, 'o': 4, 'p': 5, 'e': 6, 'w': 7, 'y': 8}
+                    veil_type_mapping = {'p': 0, 'u': 1}
+                    veil_color_mapping = {'n': 0, 'o': 1, 'w': 2, 'y': 3}
+                    ring_number_mapping = {'n': 0, 'o': 1, 't': 2}
+                    ring_type_mapping = {'c': 0, 'e': 1, 'f': 2, 'l': 3, 'n': 4, 'p': 5, 's': 6, 'z': 7}
+                    spore_print_color_mapping = {'k': 0, 'n': 1, 'b': 2, 'h': 3, 'r': 4, 'o': 5, 'u': 6, 'w': 7, 'y': 8}
+                    population_mapping = {'a': 0, 'c': 1, 'n': 2, 's': 3, 'v': 4, 'y': 5}
+                    habitat_mapping = {'g': 0, 'l': 1, 'm': 2, 'p': 3, 'u': 4, 'w': 5, 'd': 6}
+
+                    # Convert non-numerical features to float using the mappings
+                    encoded_features = [
+                        cap_shape_mapping[row[1]],
+                        cap_surface_mapping[row[2]],
+                        cap_color_mapping[row[3]],
+                        bruises_mapping[row[4]],
+                        odor_mapping[row[5]],
+                        gill_attachment_mapping[row[6]],
+                        gill_spacing_mapping[row[7]],
+                        gill_size_mapping[row[8]],
+                        gill_color_mapping[row[9]],
+                        stalk_shape_mapping[row[10]],
+                        stalk_root_mapping[row[11]],
+                        stalk_surface_above_ring_mapping[row[12]],
+                        stalk_surface_below_ring_mapping[row[13]],
+                        stalk_color_above_ring_mapping[row[14]],
+                        stalk_color_below_ring_mapping[row[15]],
+                        veil_type_mapping[row[16]],
+                        veil_color_mapping[row[17]],
+                        ring_number_mapping[row[18]],
+                        ring_type_mapping[row[19]],
+                        spore_print_color_mapping[row[20]],
+                        population_mapping[row[21]],
+                        habitat_mapping[row[22]]
+                    ]
+                    data.append(encoded_features) 
+                        
+                else:
+                    data.append([float(val) for val in row[:-1]])
+                    label = row[-1]
+                    labels.append(0 if label == 'b' else 1)
+
+
+    return data, labels
+
 
 
 def readFileLog(filename):
