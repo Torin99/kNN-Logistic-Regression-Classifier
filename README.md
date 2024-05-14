@@ -1,11 +1,11 @@
 # KNN Logistic Regression Classifier
 ![KNNLOGREG](https://github.com/Torin99/kNN-Logistic-Regression-Classifier/assets/87572723/75d23224-a543-40c0-a27d-8c35ebb2183d)
 
-## Overview:
+## ⁉️ Overview:
 
 This repository contains code and analysis for a machine learning project comparing the performance of two classification models, k-nearest Neighbor (KNN) and Logistic Regression, on four distinct datasets. The project also includes experiments to find the best hyperparameters for the models.
 
-## Datasets:
+## 📊 Datasets:
 
 ### 1. Ionosphere Dataset:
 - **Description:** Radar measurements collected in Goose Bay, Labrador, focusing on radar returns from free electrons in the ionosphere.
@@ -23,7 +23,7 @@ This repository contains code and analysis for a machine learning project compar
 - **Description:** Dataset of 23 species of mushrooms classified as poisonous or edible.
 - **Preprocessing:** Labels mapped to binary values (1 for edible mushrooms, 0 for poisonous mushrooms).
 
-## Models:
+## 📈 Models:
 
 ### 1. Logistic Regression:
 - **Implementation:** Full-batch gradient descent optimization.
@@ -35,7 +35,7 @@ This repository contains code and analysis for a machine learning project compar
 - **Features:** Explores different values of K to find the best hyperparameter.
 - **Experimentation:** Evaluated using 5-fold cross-validation.
 
-## Results and Analysis:
+## 📝 Results and Analysis:
 
 ### Comparison of Models:
 
